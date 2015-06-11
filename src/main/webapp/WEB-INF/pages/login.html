@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Login</title>
+</head>
+<body>
+<h3>Login Page</h3>
+
+                    <form id="loginForm" class="loginbox" name="loginForm" th:action="@{j_spring_security_check}" method="post">
+                     
+                       <table> 
+                            
+                        <tr>
+                       
+                            <th>id</th>
+                             
+                           <td> <input type="text"
+                                 id="username"  name="username" />
+                        </td>
+                        </tr>
+                       <tr>
+                            <th>Password</th>
+                             
+                            <td><input type="password"
+                                id="password" name="password" />
+                        </td>
+                        </tr>
+ 						 </table>
+
+                            <button>Login</button>
+                           
+                            </form>
+
+</body>
+</html>

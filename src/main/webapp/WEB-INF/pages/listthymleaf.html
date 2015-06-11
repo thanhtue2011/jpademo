@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Account List Thymeleaf</title>
+   <link rel="stylesheet"  th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css}"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" th:href="@{//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css}"/>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script type="text/javascript"  th:src="@{/resources/js/dialog.js}"></script>
+    <script type="text/javascript"  th:src="@{/resources/js/show.js}"></script>
+     <script type="text/javascript" charset="UTF-8"  th:src="@{/resources/js/script.js}"></script>
+	<style type="text/css">
+	    .bs-example{
+	    	margin: 20px;
+	    }
+	</style>
+    <link type="text/css"  th:href="@{/resources/css/style1.css}" rel="stylesheet"/>
+       <link type="text/css"  th:href="@{/resources/css/form.css}" rel="stylesheet"/>
+    <script>
+function showAccount()
+{     
+	  var limit = document.getElementById( 'limit' ) ;
+      window.location = "/jpademo/admin/thymeleafpage?limit="+limit.value ;
+}
+</script>
+</head>
+<body>  
+              <div class="bs-example" align="center">
+                <ul class="pagination" th:each="i : ${#numbers.sequence(1,((totalrecord)/limit)+(totalrecord%limit==0?0:1))}">
+					<li><a th:href="@{'/admin/thymeleafpage?page='+${i}}"><label th:text="${i}">number</label></a></li>
+				</ul>
+			 </div>
+	  <label for="new">Shows in</label><form action=""><select name="limit" id="limit" onchange="showAccount()"> 
+                <option th:value="0">--Select---</option>
+                <option th:value="10">10</option>
+                <option th:value="20">20</option>
+                <option th:value="30">30</option>
+            </select></form>
+	<p th:text="${msg}" style="color:#FF0000"></p>
+	<div class="success">
+   <table id="customers" border="1">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+       <th>Sex</th>
+      <th>Status</th>
+      <th>Options</th>
+       <th>Edits</th>
+    </tr>
+  </thead>
+  <tbody>
+   <tr th:each="prod : ${listAccount}">
+        <td th:text="${prod.id}">Id</td>
+
+        <td th:text="${prod.name}">name</td>
+       <td th:text="${prod.firstname}">firstname</td>
+        <td th:text="${prod.lastname}">lastname</td>
+        <td th:text="${prod.sex}==true?Male:Female">sex</td>
+         <!--  <td th:if="${prod.sex}==1" th:text="Nam" th:unless="${prod.sex}==0" th:text="Nu">sex</td>-->
+        <td th:text="${prod.status}">status</td>
+        <td><form  th:action="@{/admin/delete}" method="Post" th:object="${account}" th:id="${prod.id}" ><input type="hidden" name="id" th:value="${prod.id}" />
+       <input type="hidden" th:value="${page+(listAccount.size()==1?-1:0)}" name="page"/>
+        </form><input type="button" value="Del" th:onclick="'javascript:Xoa(\''+${prod.id}+'\');'"/></td>
+         <td><form  th:action="@{/admin/edit}" method="Post" th:object="${account}"><input type="hidden" name="id" th:value="${prod.id}"/>
+        <input type="hidden" th:value="${page}" name="page"/><input type="submit" value="Edit"/>
+        </form></td>
+      </tr>
+  </tbody>
+</table>
+</div>
+<form th:action="@{/admin/saveAccount}" th:object="${account}" method="post" onsubmit="return checkForm();" class="smart-green">
+    <h1>New Account Form 
+        <span>Please fill all the texts in the fields.</span>
+    </h1>
+    <label>
+        <span>Your Name :</span>
+        <input id="name" type="text" name="name" placeholder="Your Name" onblur="validname();"/>
+  
+    </label>
+     
+    <label>
+    <span id="tname" style="color:#FF0000"></span>
+    </label><br/>
+    <label>
+        <span>Your First Name :</span>
+        <input type="text" id="firstname" name="firstname" onblur="validfname();" placeholder="Valid First Name" />
+    </label>
+     <label><span id="fname" style="color:#FF0000"></span>
+     </label>
+    <label>
+       <span>Your Last Name :</span>
+        <input type="text" id="lastname" name="lastname" onblur="validlname();" placeholder="Valid Last Name" />
+    	
+    </label>
+       <label><span id="lname" style="color:#FF0000"></span></label><br/>
+         <label>
+         Your Sex:
+         <input type="radio" name="sex" th:value="Male" th:checked="${true}"/>Male
+         <input type="radio" name="sex" th:value="Female"/>Female
+      </label>
+       <label>Status:
+       <select name="status" th:field="${account.status}">
+      <option th:value="@{Dang su dung}" th:text="@{Dang su dung}"/>
+      <option th:value="@{Tam ngung}" th:text="@{Tam ngung}"/>
+      <option th:value="@{Khoa}" th:text="@{Khoa}"/>
+      
+     </select></label> 
+       <input type="hidden" th:value="${((totalrecord)/limit)+1}" name="page" />
+     <label>
+        <span>&nbsp;</span> 
+        <input type="submit" class="button" value="Send" /> 
+    </label>    
+</form>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+body {background: url(background_2cwebvn.png);color:#00f;}
+#tutorial{width:400px; margin:50px auto 0px;}
+h2{width:480px; margin:50px auto 0px;text-align:center;color:#DB2E66;}
+label{width:50px; float:left;}
+p.submit{margin-left:50px;}
+p.success{width:400px; margin:50px auto 0px;font-size:19px;	color:#DB2E66;}
+a,a:VISITED{color:#00f;}
+span{color:#DB2E66;}

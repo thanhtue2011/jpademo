@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <script type="text/javascript" charset="UTF-8"  th:src="@{/resources/js/script.js}"></script>
+   <link type="text/css"  th:href="@{/resources/css/form.css}" rel="stylesheet"/>
+    <title>Account List Thymeleaf</title>
+</head>
+<body>
+<form th:action="@{/admin/saveedit}" th:object="${account}" method="post" onsubmit="return checkForm();" class="smart-green">
+    <h1>Edit Account Form 
+        <span>Please fill all the texts in the fields.</span>
+    </h1>
+      <input type="hidden" id="id" name="id" th:value="${account.id}"/>
+    
+    <label>
+        <span>Your Name :</span>
+        <input id="name" type="text" name="name" onblur="validname();" th:value="${account.name}"/>
+  
+    </label>
+     
+    <label>
+    <span id="tname" style="color:#FF0000"></span>
+    </label><br/>
+    <label>
+        <span>Your First Name :</span>
+        <input type="text" id="firstname" name="firstname" onblur="validfname();" th:value="${account.firstname}" />
+    </label>
+     <label><span id="fname" style="color:#FF0000"></span>
+     </label>
+    <label>
+       <span>Your Last Name :</span>
+        <input type="text" id="lastname" name="lastname" onblur="validlname();" th:value="${account.lastname}" />
+    	
+    </label>
+     <label>
+         Your Sex:
+         <input type="radio" name="sex" th:field="${account.sex}" th:value="@{true}"/>Male
+         <input type="radio" name="sex" th:field="${account.sex}"  th:value="@{false}"/>Female
+      </label>
+       <label>Status:
+       <select name="status" th:field="${account.status}">
+      <option th:value="@{Dang su dung}" th:text="@{Dang su dung}"/>
+      <option th:value="@{Tam ngung}" th:text="@{Tam ngung}"/>
+      <option th:value="@{Khoa}" th:text="@{Khoa}"/>  
+     </select></label> 
+       <label><span id="lname" style="color:#FF0000"></span></label><br/>
+      <input type="hidden" th:value="${page}" name="page" />
+     <label>
+        <span>&nbsp;</span> 
+        <input type="submit" class="button" value="Send" /> 
+    </label>    
+</form>
+</body>
+</html>
